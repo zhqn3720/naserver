@@ -32,6 +32,7 @@ namespace tanic
 	    //m_acceptor生存周期等于TcpServer生存周期
 	    boost::scoped_ptr<Acceptor> m_acceptor;
 	    typedef std::vector<TcpConnectionPtr> Connections;
+	    
 	    Connections m_connections;
 	    
 	    ConnectionCallback m_connectionCallback;

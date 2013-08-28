@@ -10,7 +10,7 @@ namespace tanic
 {
 	class InetAddress;//前向声明 InetAddress* 作为参数
 	class Dispatcher;
-	class TcpServer;
+	
 	class Acceptor:public EventHandler
 	{
 	public:
@@ -40,6 +40,7 @@ namespace tanic
 	    int m_index;//在Pollfds vector中的序列号
 	    
 	    boost::scoped_ptr<Socket> m_acceptSocket;
+	    
 		int m_handle;
 		int m_revent;
 

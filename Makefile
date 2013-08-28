@@ -1,22 +1,23 @@
-objects = InetAddress.o Socket.o Poller.o Dispatcher.o Acceptor.o TcpServer.o TcpConnection.o test.o
+objects = InetAddress.o Socket.o  Dispatcher.o Poller.o Acceptor.o TcpServer.o TcpConnection.o test.o
 test : $(objects)
 	g++ -o test $(objects) 
 
 InetAddress.o:InetAddress.hpp
-	g++ -c InetAddress.cpp
 Socket.o: InetAddress.hpp Socket.hpp
-	g++ -c Socket.cpp	
-Dispatcher.o: Poller.hpp Dispatcher.hpp
-	g++ -c Dispatcher.cpp
 Poller.o: EventHandler.hpp Poller.hpp
-	g++ -c Poller.cpp
-Acceptor.o:  Dispatcher.hpp Acceptor.hpp
-	g++ -c Acceptor.cpp
-TcpServer.o: TcpServer.cpp TcpServer.hpp
-	g++ -c TcpServer.cpp
-TcpConnection.o: TcpConnection.cpp TcpConnection.hpp
-	g++ -c TcpConnection.cpp
-test.o: test.cpp
-	g++ -c test.cpp
+Dispatcher.o: Poller.hpp Dispatcher.hpp EventHandler.hpp
+Acceptor.o:  Dispatcher.hpp Acceptor.hpp EventHandler.hpp InetAddress.hpp
+TcpServer.o:  TcpConnection.hpp Acceptor.hpp Dispatcher.hpp\
+              Callbacks.hpp InetAddress.hpp TcpServer.hpp
+TcpConnection.o: Dispatcher.hpp TcpConnection.hpp EventHandler.hpp InetAddress.hpp	
+test.o: InetAddress.hpp Dispatcher.hpp Acceptor.hpp TcpServer.hpp
 clean:
 	rm test $(objects)
+install:
+	mkdir -p ./build/include/tanic
+	mkdir -p ./build/lib
+	cp *.hpp ./build/include/tanic
+	ar -rv libtanic.a *.o
+	mv libtanic.a ./build/lib
+uninstall:
+	rm -r ./build

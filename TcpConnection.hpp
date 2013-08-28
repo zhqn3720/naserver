@@ -8,7 +8,7 @@
 namespace tanic
 {
 	
-	class TcpConnection:public EventHandler,
+	class TcpConnection:public EventHandler
 	{
 	public:
 		TcpConnection(Dispatcher *, int, const InetAddress&, const InetAddress&);

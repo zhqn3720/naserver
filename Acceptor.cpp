@@ -1,17 +1,16 @@
 #include "Acceptor.hpp"
 #include "InetAddress.hpp"
-#include "EchoHandler.hpp"
+//#include "EchoHandler.hpp"
 #include <unistd.h>
 #include <iostream>
 using namespace tanic;
 
-Acceptor::Acceptor(Dispatcher * dispatcher, TcpServer * const tcpserver, const InetAddress & servaddr)
+Acceptor::Acceptor(Dispatcher * dispatcher, const InetAddress & servaddr)
            :m_dispatcher(dispatcher),
-           m_tcpserver(tcpserver),
            m_listenning(false),
-           m_index(-1)
+           m_index(-1),
+           m_acceptSocket(new Socket())
 {
-	m_acceptSocket = new Socket();
 	m_handle = m_acceptSocket->fd();
 	m_acceptSocket->setReuseAddr(true);
 	m_acceptSocket->bind(servaddr);
